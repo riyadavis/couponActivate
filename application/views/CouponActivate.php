@@ -25,6 +25,7 @@
             let request = await fetch(url);
             let response = await request.json();
             // console.log(response);
+            
             response.map(r=>{
                 //the cart is not viewed, but the cart id is displayed
                 let cartId = document.createElement('input');
@@ -37,20 +38,22 @@
                     couponInfo.name = "couponCode";
                     couponInfo.id = "couponCode";
                     couponInfo.placeholder = "Coupon Code";
-                let productId = document.createElement('input');
-                    productId.value = r.product_id;
-                    productId.id = "productId";
-                    productId.name = "productId";
-                    productId.type = "hidden";
+               
+
+                // let productId = document.createElement('input');
+                //     productId.value = r.product_id;
+                //     productId.id = "productId";
+                //     productId.name = "productId";
+                //     productId.type = "hidden";
                 let userId = document.createElement('input');
                     userId.id = "userId";
                     userId.type = "hidden";
-                    userId.value = r.user_id;
+                    userId.value = r.customer_id;
                     userId.name = "userId";
                 let button = document.createElement('input');
                     button.value = "Coupon Activate";
                     button.type = "button";
-                   
+                
                 let couponDiv = document.getElementById('couponActivate');
                 let para = document.createElement('p');
                 couponDiv.appendChild(cartId);
@@ -62,7 +65,7 @@
                     // console.log(couponInfo.value);
                         let url = "<?php echo site_url('CouponActivateApi/CouponActivate');?>";
                         var form = new FormData();
-                        form.append('productId',productId.value);
+                        // form.append('productId',productId.value);
                         form.append('couponCode',couponInfo.value);
                         form.append('userId',userId.value);
                         form.append('cartId',cartId.value);

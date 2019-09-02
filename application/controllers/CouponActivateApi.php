@@ -30,4 +30,6 @@ class CouponActivateApi extends CI_Controller {
 		$data = $this->CouponActivateDatabase->CouponActivate();
 		echo json_encode($data);
 	}
+
+	
 }
