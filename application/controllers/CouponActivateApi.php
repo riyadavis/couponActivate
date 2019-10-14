@@ -7,6 +7,15 @@ class CouponActivateApi extends CI_Controller {
 	{
 		parent :: __construct();
 		$this->load->model('CouponActivateDatabase');
+		if($this->session->has_userdata('userauth') == FALSE)
+        {
+			$this->CouponActivateDatabase->SaltData();
+			if($this->session->has_userdata('userauth') == FALSE)
+			{
+				echo json_encode("error");
+				die();
+			}
+		}
 	}
 
 	public function index()
@@ -30,6 +39,5 @@ class CouponActivateApi extends CI_Controller {
 		$data = $this->CouponActivateDatabase->CouponActivate();
 		echo json_encode($data);
 	}
-
 	
 }

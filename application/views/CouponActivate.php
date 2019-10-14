@@ -21,7 +21,7 @@
         RetrieveCart();
         async function RetrieveCart()
         {
-            let url = "<?php echo site_url('CouponActivateApi/RetrieveCart'); ?>";
+            let url = "<?php echo site_url('CouponActivateApi/RetrieveCart'); ?>?q=1";
             let request = await fetch(url);
             let response = await request.json();
             // console.log(response);

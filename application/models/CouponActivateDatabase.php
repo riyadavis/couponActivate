@@ -3,20 +3,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class CouponActivateDatabase extends CI_Model {
 
+    public function SaltData()
+    {
+        $salt = 'adastratechnologies';
+        $hash = sha1($salt.'adastra');
+        $this->session->set_userdata('userauth',$hash);
+        if(isset($_GET['q']))
+        {
+            $mobno = $_GET['q'];
+            $pw_hash = sha1($salt.$mobno);
+            $matchData = $this->db->query("select * from api_table where MATCH(salt) AGAINST('$pw_hash' IN NATURAL LANGUAGE MODE)")->result_array(); 
+            if($this->db->affected_rows()>0)
+            {
+                $this->session->set_userdata('userauth',$pw_hash);
+                return 0;
+            }
+        }
+        return 0;
+        // return $pw_hash;
+        // return $iduser;
+    }
+
     public function RetrieveCart()
     {
         //assuming session variable 'userid' has 'user id'
-        $this->session->set_userdata('userid',1);
-        if($this->session->has_userdata('userid'))
-        {
-            $userid = $this->session->userdata('userid');
+        // $this->session->set_userdata('userid',1);
+        // if($this->session->has_userdata('userid'))
+        // {
+        //     $userid = $this->session->userdata('userid');
+            $userid = $_GET['q'];
             $RetrieveData = $this->db->query("select * from cart_table where customer_id = '$userid'")->result_array();
             return $RetrieveData;
-        }
-        else
-        {
-            return "error";
-        }
+        // }
+        // else
+        // {
+        //     return "error";
+        // }
     }
 
     public function CouponActivate()
